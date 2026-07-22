@@ -7,9 +7,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
+  --font-sans: var(--font-body);
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  --font-heading: var(--font-display);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -48,73 +48,319 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* Base light learning palette — soft neural network feel, never neon-on-navy */
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --bg: #f7f9fc;
+  --ink: #1a2332;
+  --focus: #0d9488;
+  --growth: #059669;
+  --warn: #d97706;
+  --surface: #ffffff;
+  --mesh-a: #e0f2fe;
+  --mesh-b: #fce7f3;
+  --mesh-c: #ecfdf5;
+
+  --background: var(--bg);
+  --foreground: var(--ink);
+  --card: var(--surface);
+  --card-foreground: var(--ink);
+  --popover: var(--surface);
+  --popover-foreground: var(--ink);
+  --primary: #0f766e;
+  --primary-foreground: #f0fdfa;
+  --secondary: #eef2f7;
+  --secondary-foreground: #1a2332;
+  --muted: #eef2f7;
+  --muted-foreground: #5b6b7c;
+  --accent: #ccfbf1;
+  --accent-foreground: #134e4a;
+  --destructive: oklch(0.55 0.2 25);
+  --border: #d8e0ea;
+  --input: #d8e0ea;
+  --ring: #0d9488;
+  --chart-1: #0d9488;
+  --chart-2: #0284c7;
+  --chart-3: #059669;
+  --chart-4: #d97706;
+  --chart-5: #6366f1;
+  --radius: 0.75rem;
+  --sidebar: #f1f5f9;
+  --sidebar-foreground: #1a2332;
+  --sidebar-primary: #0f766e;
+  --sidebar-primary-foreground: #f0fdfa;
+  --sidebar-accent: #e2e8f0;
+  --sidebar-accent-foreground: #1a2332;
+  --sidebar-border: #d8e0ea;
+  --sidebar-ring: #0d9488;
+  /* Escala tipográfica base (dashboard más legible / “grande”) */
+  --type-base: 1.0625rem;
+  --content-gap: 1.25rem;
+  --dashboard-pad: 1.75rem;
+  --dashboard-max: 56rem;
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+/* Accent preference overrides */
+html[data-accent="warm"] {
+  --focus: #ea580c;
+  --primary: #c2410c;
+  --primary-foreground: #fff7ed;
+  --accent: #ffedd5;
+  --accent-foreground: #7c2d12;
+  --ring: #ea580c;
+  --sidebar-primary: #c2410c;
+  --mesh-a: #fff7ed;
+  --mesh-b: #fce7f3;
+  --mesh-c: #fef3c7;
+}
+
+html[data-accent="cool"] {
+  --focus: #0891b2;
+  --primary: #0e7490;
+  --primary-foreground: #ecfeff;
+  --accent: #cffafe;
+  --accent-foreground: #164e63;
+  --ring: #0891b2;
+  --sidebar-primary: #0e7490;
+  --mesh-a: #ecfeff;
+  --mesh-b: #e0f2fe;
+  --mesh-c: #f0fdfa;
+}
+
+html[data-accent="neutral"] {
+  --focus: #059669;
+  --primary: #047857;
+  --primary-foreground: #ecfdf5;
+  --accent: #d1fae5;
+  --accent-foreground: #064e3b;
+  --ring: #059669;
+  --sidebar-primary: #047857;
+  --mesh-a: #ecfdf5;
+  --mesh-b: #f0f9ff;
+  --mesh-c: #f8fafc;
+}
+
+html[data-accent="high-contrast"] {
+  --bg: #ffffff;
+  --ink: #0a0f1a;
+  --focus: #4338ca;
+  --primary: #312e81;
+  --primary-foreground: #eef2ff;
+  --accent: #e0e7ff;
+  --accent-foreground: #1e1b4b;
+  --muted-foreground: #334155;
+  --border: #94a3b8;
+  --ring: #4338ca;
+  --sidebar-primary: #312e81;
+  --mesh-a: #eef2ff;
+  --mesh-b: #f8fafc;
+  --mesh-c: #ecfeff;
+}
+
+/* Age band type & density — un poco más grandes en todos los perfiles */
+html[data-type="md"] {
+  --type-base: 1.0625rem;
+}
+html[data-type="lg"] {
+  --type-base: 1.125rem;
+}
+html[data-type="xl"] {
+  --type-base: 1.1875rem;
+}
+html[data-density="comfortable"] {
+  --content-gap: 1.5rem;
+}
+html[data-density="compact"] {
+  --content-gap: 1rem;
+}
+html[data-density="balanced"] {
+  --content-gap: 1.25rem;
+}
+
+/* Soft mesh background (learning atmosphere, not flat white) */
+.essentius-mesh {
+  background:
+    radial-gradient(ellipse 80% 60% at 10% 0%, var(--mesh-a) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 50% at 90% 10%, var(--mesh-b) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 50% 100%, var(--mesh-c) 0%, transparent 45%),
+    var(--bg);
+}
+
+/* Soft scrim behind copy so particle links never steal legibility */
+.essentius-copy-panel {
+  position: relative;
+  isolation: isolate;
+  border-radius: 1.25rem;
+  padding: 1.25rem 1.35rem;
+  background:
+    linear-gradient(
+      165deg,
+      rgba(247, 249, 252, 0.92) 0%,
+      rgba(247, 249, 252, 0.82) 55%,
+      rgba(247, 249, 252, 0.72) 100%
+    );
+  box-shadow: 0 0 0 1px rgba(216, 224, 234, 0.35);
+  backdrop-filter: blur(8px);
+}
+
+@media (min-width: 768px) {
+  .essentius-copy-panel {
+    padding: 1.5rem 1.75rem;
+  }
+}
+
+/*
+ * Marketing (landing + login): superficies neutras + oro solo como acento (CTA/focus).
+ * No cambia el tema del dashboard (sigue data-accent en html).
+ */
+.essentius-yellow-cta {
+  --bg: #f4f4f5;
+  --ink: #18181b;
+  --focus: #f5c542;
+  --mesh-a: #eceae6;
+  --mesh-b: #f4f4f5;
+  --mesh-c: #e8e6e2;
+  --background: #f4f4f5;
+  --foreground: #18181b;
+  --card: #ffffff;
+  --card-foreground: #18181b;
+  --primary: #52525b;
+  --primary-foreground: #fafafa;
+  --secondary: #f4f4f5;
+  --secondary-foreground: #27272a;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+  --accent: #f4f4f5;
+  --accent-foreground: #27272a;
+  --border: #e4e4e7;
+  --input: #e4e4e7;
+  --ring: #f5c542;
+  --popover: #ffffff;
+  --popover-foreground: #18181b;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  color: var(--foreground);
+}
+
+/* Soft scrim — blanco neutro, sin velo amarillo */
+.essentius-yellow-cta .essentius-copy-panel {
+  background:
+    linear-gradient(
+      165deg,
+      rgba(255, 255, 255, 0.96) 0%,
+      rgba(250, 250, 250, 0.92) 50%,
+      rgba(255, 255, 255, 0.9) 100%
+    );
+  box-shadow:
+    0 0 0 1px rgba(228, 228, 231, 0.9),
+    0 12px 40px -24px rgba(24, 24, 27, 0.12);
+}
+
+/* Cards de marketing: blanca + ribete oro muy ligero (acento, no relleno) */
+.essentius-yellow-cta [data-slot="card"],
+.essentius-yellow-cta .essentius-soft-card {
+  background: #ffffff;
+  border-color: color-mix(in oklab, #f5c542 14%, #e4e4e7);
+  box-shadow:
+    0 0 0 1px rgba(245, 197, 66, 0.07),
+    0 12px 36px -22px rgba(24, 24, 27, 0.12);
+}
+
+/* Solo botones default: amarillo de la camiseta del estudiante */
+.essentius-yellow-cta [data-slot="button"][data-variant="default"] {
+  background-color: #f5c542 !important;
+  color: #3f3420 !important;
+}
+
+.essentius-yellow-cta [data-slot="button"][data-variant="default"]:hover {
+  background-color: #e8b923 !important;
+}
+
+.essentius-yellow-cta [data-slot="button"][data-variant="default"]:focus-visible {
+  border-color: #e8b923 !important;
+  --tw-ring-color: color-mix(in oklab, #f5c542 55%, transparent);
+}
+
+/* Landing loader (ldloader) — light cinematic gate */
+.essentius-loader-bg {
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 40%, var(--mesh-a) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 80% 80%, var(--mesh-c) 0%, transparent 55%),
+    var(--bg);
+}
+
+.ldld.essentius-ldld {
+  color: var(--primary);
+}
+
+.ldld.essentius-ldld.default {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  transform: none;
+  top: 0;
+  left: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.ldld.essentius-ldld.default:before {
+  border-width: 2px;
+  border-color: currentColor transparent currentColor transparent;
+}
+
+/* Hero orbital rings — subtle motion like the reference reel */
+.essentius-hero-orbit {
+  animation: essentius-orbit-pulse 8s ease-in-out infinite;
+}
+
+.essentius-hero-orbit--delayed {
+  animation-delay: -3.2s;
+  animation-duration: 11s;
+}
+
+@keyframes essentius-orbit-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.02);
+  }
+}
+
+.essentius-scroll-line {
+  animation: essentius-scroll-breathe 2.2s ease-in-out infinite;
+}
+
+@keyframes essentius-scroll-breathe {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scaleY(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
 }
 
 @layer base {
@@ -122,9 +368,74 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-body), "IBM Plex Sans", ui-sans-serif, system-ui,
+      sans-serif;
+    font-size: var(--type-base);
+    line-height: 1.55;
+    letter-spacing: 0.01em;
   }
   html {
     @apply font-sans;
+  }
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-display), "Source Serif 4", ui-serif, Georgia,
+      "Times New Roman", serif;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+  }
+}
+
+/* Shell del dashboard: más aire y tipografía un punto más grande */
+.dashboard-shell {
+  font-size: calc(var(--type-base) * 1.04);
+}
+
+.dashboard-shell .dashboard-page {
+  padding: var(--dashboard-pad);
+  max-width: var(--dashboard-max);
+  margin-inline: auto;
+  text-align: center;
+}
+
+.dashboard-shell .dashboard-page .dashboard-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dashboard-shell .dashboard-page .dashboard-section > * {
+  width: 100%;
+}
+
+.dashboard-shell .dashboard-page .dashboard-prose {
+  margin-inline: auto;
+  max-width: 36rem;
+}
+
+.dashboard-shell .dashboard-page .dashboard-form {
+  text-align: left;
+  max-width: 36rem;
+  margin-inline: auto;
+  width: 100%;
+}
+
+.dashboard-shell aside nav a,
+.dashboard-shell aside button {
+  font-size: 0.95em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

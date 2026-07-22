@@ -1,66 +1,84 @@
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+"use client";
+
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Progress } from "@/components/ui/progress";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Award, BrainCircuit, Target } from "lucide-react";
+import { useAppStore } from "@/store/useAppStore";
+import { motion } from "framer-motion";
+import { BookOpen, Network, PenLine } from "lucide-react";
+import Link from "next/link";
 
 export default function DashboardPage() {
+  const documents = useAppStore((s) => s.documents);
+  const notesCount = useAppStore((s) => s.notes.length);
+
   return (
-    <div className="flex-1 flex gap-4 p-4 overflow-hidden">
-      {/* 1. SECCIÓN DE CHAT */}
-      <Card className="flex-[3] flex flex-col h-full bg-background border-muted/50">
-        <ScrollArea className="flex-1 p-4 space-y-4">
-          {/* Mensaje de Essentius (Simulado) */}
-          <div className="flex gap-3 items-start mb-6">
-            <Avatar className="h-9 w-9 border border-primary/50">
-              <BrainCircuit className="h-5 w-5 text-primary" />
-              <AvatarFallback>AI</AvatarFallback>
-            </Avatar>
-            <div className="bg-muted p-3 rounded-lg max-w-[80%] text-sm shadow-inner">
-              <p className="text-primary font-semibold mb-1">Essentius</p>
-              ¡Hola! Tu API Backend ya me responde con código 200. Cuando me conectes a Next.js hooks, aquí verás mis respuestas reales. Mientras tanto, ¡mira qué bien me veo!
-            </div>
-          </div>
-        </ScrollArea>
-        
-        {/* Input Bar */}
-        <div className="p-3 border-t bg-muted/20 flex gap-2">
-          <Input placeholder="Hazme una pregunta sobre tus documentos..." className="bg-background" />
-          <Button>Preguntar</Button>
-        </div>
-      </Card>
+    <div className="dashboard-page p-8 md:p-10 max-w-5xl space-y-10">
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="dashboard-section space-y-3"
+      >
+        <h1 className="font-display text-4xl tracking-tight">Tu espacio</h1>
+        <p className="dashboard-prose text-muted-foreground text-base leading-relaxed">
+          Gestiona fuentes, escribe pensamientos sin IA y compáralos en el grafo.
+        </p>
+      </motion.div>
 
-      {/* 2. SECCIÓN DE GAMIFICACIÓN (Visivamente Bello) */}
-      <aside className="flex-1 space-y-4">
-        {/* Tarjeta de Nivel */}
-        <Card className="border-primary/30 bg-primary/5 shadow-lg shadow-primary/10">
-          <CardContent className="p-4 flex flex-col gap-2">
-            <div className="flex justify-between items-center">
-              <h3 className="font-bold text-lg text-primary">Arquitecto del Conocimiento</h3>
-              <div className="bg-primary text-primary-foreground font-bold px-3 py-1 rounded-full text-xs">NIVEL 5</div>
-            </div>
-            <Progress value={60} className="h-2 bg-primary/20" />
-            <p className="text-xs text-muted-foreground text-center">450 / 1000 XP para el siguiente nivel</p>
-          </CardContent>
-        </Card>
+      <div className="grid sm:grid-cols-3 gap-5">
+        {[
+          {
+            label: "Fuentes",
+            value: documents.length,
+            href: "/dashboard/library",
+            icon: BookOpen,
+          },
+          {
+            label: "Notas humanas",
+            value: notesCount,
+            href: "/dashboard/deep-learning/notes",
+            icon: PenLine,
+          },
+          {
+            label: "Grafo",
+            value: "Abrir",
+            href: "/dashboard/deep-learning/graph",
+            icon: Network,
+          },
+        ].map(({ label, value, href, icon: Icon }, i) => (
+          <motion.div
+            key={label}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.08 * i }}
+          >
+            <Link
+              href={href}
+              className="block rounded-2xl border border-border bg-card/80 p-6 hover:border-primary/40 transition-colors text-center"
+            >
+              <Icon
+                className="h-6 w-6 text-primary mb-3 mx-auto"
+                strokeWidth={1.5}
+              />
+              <p className="text-xs text-muted-foreground uppercase tracking-wide">
+                {label}
+              </p>
+              <p className="font-display text-3xl mt-1">{value}</p>
+            </Link>
+          </motion.div>
+        ))}
+      </div>
 
-        {/* Misiones/Metas */}
-        <Card className="bg-muted/10">
-          <CardContent className="p-4 space-y-3">
-            <h4 className="font-semibold text-sm flex items-center gap-2"><Target className="h-4 w-4 text-purple-400" /> Misiones Diarias</h4>
-            <div className="text-sm bg-muted p-2 rounded flex justify-between">
-              <span>Vectorizar 1 PDF</span>
-              <span className="text-primary font-bold">+50 XP</span>
-            </div>
-            <div className="text-sm bg-muted p-2 rounded flex justify-between text-muted-foreground">
-              <span className="line-through">Hacer 3 preguntas profundas</span>
-              <Award className="h-4 w-4 text-amber-400" />
-            </div>
-          </CardContent>
-        </Card>
-      </aside>
+      <div className="flex flex-wrap justify-center gap-3">
+        <Button asChild>
+          <Link href="/dashboard/deep-learning/notes">Escribir una nota</Link>
+        </Button>
+        <Button variant="outline" asChild>
+          <Link href="/dashboard/library">Subir PDF</Link>
+        </Button>
+        <Button variant="outline" asChild>
+          <Link href="/dashboard/rank">Ver rango e insignias</Link>
+        </Button>
+      </div>
     </div>
   );
 }

@@ -1,6 +1,8 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# ============================================================
+# Essentius frontend — solo código, public/, configs y docs
+# ============================================================
 
-# dependencies
+# --- Dependencias ---
 /node_modules
 /.pnp
 .pnp.*
@@ -10,32 +12,64 @@
 !.yarn/releases
 !.yarn/versions
 
-# testing
-/coverage
-
-# next.js
+# --- Next.js / build / caché ---
 /.next/
 /out/
-
-# production
 /build
+.turbo/
+.swc/
+*.tsbuildinfo
+next-env.d.ts
 
-# misc
-.DS_Store
-*.pem
+# --- Tests / cobertura ---
+/coverage
+/playwright-report/
+/test-results/
+/blob-report/
+.nyc_output/
 
-# debug
+# --- Secretos (NUNCA subir) ---
+.env
+.env.*
+!.env.example
+
+# --- Deploy / hosting local ---
+.vercel
+.netlify
+
+# --- Logs y debug ---
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+*.log
+logs/
 
-# env files (can opt-in for committing if needed)
-.env*
+# --- Temporales ---
+tmp/
+temp/
+.tmp/
+*.tmp
+*.temp
+*.bak
+*~
 
-# vercel
-.vercel
+# --- Certificados / keys ---
+*.pem
+*.key
+*.crt
 
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+# --- IDE / editores / OS ---
+.idea/
+.vscode/
+.cursor/
+*.code-workspace
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+# --- Storybook / herramientas opcionales locales ---
+storybook-static/
+.eslintcache
+.stylelintcache

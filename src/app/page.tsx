@@ -1,65 +1,155 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { CursorParticles } from "@/components/landing/CursorParticles";
+import { FeatureDeepSections } from "@/components/landing/FeatureDeepSections";
+import { LandingHeroAnimation } from "@/components/landing/LandingHeroAnimation";
+import { LandingLoader } from "@/components/landing/LandingLoader";
+import { MorphingHeadline } from "@/components/landing/MorphingHeadline";
+import { RevealWords } from "@/components/landing/RevealWords";
+import { LenisProvider } from "@/components/motion/LenisProvider";
+import { Button } from "@/components/ui/button";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { useCallback, useState } from "react";
+
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+export default function LandingPage() {
+  const reduce = useReducedMotion();
+  const [ready, setReady] = useState(() => Boolean(reduce));
+  const handleReady = useCallback(() => setReady(true), []);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <>
+      <LandingLoader onComplete={handleReady} />
+
+      <LenisProvider enabled={ready}>
+        <div
+          className={`essentius-yellow-cta essentius-mesh relative min-h-screen flex flex-col transition-opacity duration-700 ${
+            ready ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <CursorParticles id="essentius-landing-particles" />
+
+          <header className="relative z-20 flex items-center justify-between px-6 py-5 max-w-6xl mx-auto w-full">
+            <motion.span
+              className="font-display text-xl tracking-tight text-foreground"
+              initial={reduce ? false : { opacity: 0, y: -8 }}
+              animate={ready ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, ease: EASE, delay: 0.05 }}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              Essentius
+            </motion.span>
+            <motion.div
+              className="flex gap-3"
+              initial={reduce ? false : { opacity: 0, y: -8 }}
+              animate={ready ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, ease: EASE, delay: 0.12 }}
             >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              <Button variant="ghost" asChild>
+                <Link href="/login">Entrar</Link>
+              </Button>
+              <Button asChild>
+                <Link href="/login">Empezar</Link>
+              </Button>
+            </motion.div>
+          </header>
+
+          <main className="relative z-10 flex-1 flex flex-col">
+            <section className="relative min-h-[calc(100svh-5rem)] flex flex-col justify-center px-6 pb-16 overflow-hidden">
+              <div className="max-w-6xl mx-auto w-full grid lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-16 items-center">
+                <div className="essentius-copy-panel space-y-7 relative z-10">
+                  {ready && (
+                    <>
+                      <RevealWords
+                        as="h1"
+                        text="Essentius"
+                        className="font-display text-5xl sm:text-6xl md:text-7xl leading-[0.95] tracking-tight text-foreground"
+                        delay={0.08}
+                      />
+
+                      <MorphingHeadline />
+
+                      <motion.p
+                        className="text-base md:text-lg text-muted-foreground max-w-md leading-relaxed"
+                        initial={
+                          reduce
+                            ? false
+                            : { opacity: 0, y: 16, filter: "blur(8px)" }
+                        }
+                        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                        transition={{ duration: 0.8, delay: 0.45, ease: EASE }}
+                      >
+                        Un espacio de aprendizaje de alto nivel: pensamiento
+                        propio, conexiones claras y contraste con conocimiento
+                        estructurado.
+                      </motion.p>
+
+                      <motion.div
+                        className="flex flex-wrap gap-3 pt-1"
+                        initial={reduce ? false : { opacity: 0, y: 14 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.65, delay: 0.58, ease: EASE }}
+                      >
+                        <Button size="lg" asChild className="gap-2">
+                          <Link href="/login">
+                            Empezar a aprender{" "}
+                            <ArrowRight className="h-4 w-4" />
+                          </Link>
+                        </Button>
+                      </motion.div>
+                    </>
+                  )}
+                </div>
+
+                <motion.div
+                  className="relative z-10 justify-self-center w-full max-w-md"
+                  initial={reduce ? false : { opacity: 0, scale: 0.94, y: 24 }}
+                  animate={
+                    ready
+                      ? { opacity: 1, scale: 1, y: 0 }
+                      : { opacity: 0, scale: 0.94, y: 24 }
+                  }
+                  transition={{ duration: 0.9, delay: 0.28, ease: EASE }}
+                >
+                  <div className="essentius-hero-orbit pointer-events-none absolute inset-[-8%] rounded-full border border-primary/10" />
+                  <div className="essentius-hero-orbit essentius-hero-orbit--delayed pointer-events-none absolute inset-[-16%] rounded-full border border-border/60" />
+                  <LandingHeroAnimation />
+                </motion.div>
+              </div>
+
+              <motion.div
+                className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 text-muted-foreground/70"
+                initial={{ opacity: 0 }}
+                animate={ready ? { opacity: 1 } : { opacity: 0 }}
+                transition={{ delay: 1.1, duration: 0.6 }}
+                aria-hidden
+              >
+                <span className="text-[10px] uppercase tracking-[0.32em]">
+                  Descubre
+                </span>
+                <span className="essentius-scroll-line block h-8 w-px bg-gradient-to-b from-primary/50 to-transparent" />
+              </motion.div>
+            </section>
+
+            {ready && <FeatureDeepSections />}
+
+            <footer className="relative z-10 border-t border-border/60 px-6 py-10">
+              <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+                <span className="font-display text-lg text-foreground">
+                  Essentius
+                </span>
+                <Button asChild>
+                  <Link href="/login" className="gap-2">
+                    Crear cuenta <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </Button>
+              </div>
+            </footer>
+          </main>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </LenisProvider>
+    </>
   );
 }
