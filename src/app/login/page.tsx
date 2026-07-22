@@ -10,13 +10,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { createClient } from "@/lib/supabase/client";
+import {
+  createClient,
+  getSupabaseBrowserConfig,
+} from "@/lib/supabase/client";
 import { fetchVisualProfile } from "@/lib/theme/syncProfile";
 import { useThemeStore } from "@/store/useThemeStore";
 import { Brain, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useState } from "react";
+import { Suspense, useMemo, useState } from "react";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -26,9 +29,15 @@ function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const hydrateProfile = useThemeStore((s) => s.hydrateProfile);
-  const supabase = createClient();
+  const supabaseConfig = useMemo(() => getSupabaseBrowserConfig(), []);
 
   const handleAuth = async (action: "login" | "register") => {
+    if (!supabaseConfig.ok) {
+      setError(
+        "Faltan variables de Supabase en Vercel (NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANON_KEY). Añádelas en Production y haz Redeploy."
+      );
+      return;
+    }
     if (!email || !password) {
       setError("Por favor, llena todos los campos.");
       return;
@@ -38,6 +47,7 @@ function LoginForm() {
     setError(null);
 
     try {
+      const supabase = createClient();
       let result;
       if (action === "login") {
         result = await supabase.auth.signInWithPassword({ email, password });
@@ -102,6 +112,16 @@ function LoginForm() {
         </CardHeader>
 
         <CardContent className="space-y-4">
+          {!supabaseConfig.ok && (
+            <div className="p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-xl text-center leading-relaxed">
+              Faltan{" "}
+              <code className="text-xs">NEXT_PUBLIC_SUPABASE_URL</code> y{" "}
+              <code className="text-xs">NEXT_PUBLIC_SUPABASE_ANON_KEY</code> en
+              Vercel (Production). Guárdalas y haz{" "}
+              <strong>Redeploy</strong>.
+            </div>
+          )}
+
           {error && (
             <div className="p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-xl text-center">
               {error}
@@ -125,7 +145,7 @@ function LoginForm() {
             <Button
               className="w-full"
               onClick={() => handleAuth("login")}
-              disabled={isLoading}
+              disabled={isLoading || !supabaseConfig.ok}
             >
               {isLoading ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -137,7 +157,7 @@ function LoginForm() {
               variant="outline"
               className="w-full"
               onClick={() => handleAuth("register")}
-              disabled={isLoading}
+              disabled={isLoading || !supabaseConfig.ok}
             >
               Crear cuenta
             </Button>

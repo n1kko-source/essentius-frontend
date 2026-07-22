@@ -5,8 +5,19 @@ export const dynamic = "force-dynamic";
 /** PDFs medianos + embeddings free-tier pueden tardar varios minutos en local. */
 export const maxDuration = 300;
 
-const backend =
-  process.env.BACKEND_URL?.replace(/\/$/, "") || "http://127.0.0.1:8000";
+function resolveBackendOrigin(): string {
+  const explicit = process.env.BACKEND_URL?.trim().replace(/\/$/, "");
+  if (explicit) return explicit;
+
+  const api = process.env.NEXT_PUBLIC_API_URL?.trim().replace(/\/$/, "") || "";
+  if (/^https?:\/\//i.test(api)) {
+    return api.replace(/\/api\/v1$/i, "") || api;
+  }
+
+  return "http://127.0.0.1:8000";
+}
+
+const backend = resolveBackendOrigin();
 
 export async function POST(request: NextRequest) {
   const target = `${backend}/api/v1/ingest/upload-pdf`;

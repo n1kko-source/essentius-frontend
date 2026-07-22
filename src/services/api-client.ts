@@ -1,7 +1,15 @@
 import { createClient } from "@/lib/supabase/client";
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") || "/api/v1";
+/** Accepts `/api/v1`, full `…/api/v1`, or bare Railway origin (adds `/api/v1`). */
+function resolveApiBaseUrl(): string {
+  const raw = (process.env.NEXT_PUBLIC_API_URL || "/api/v1").trim().replace(/\/$/, "");
+  if (!raw || raw === "/api/v1") return "/api/v1";
+  if (raw.endsWith("/api/v1")) return raw;
+  if (/^https?:\/\//i.test(raw)) return `${raw}/api/v1`;
+  return raw;
+}
+
+const API_BASE_URL = resolveApiBaseUrl();
 
 const getAuthHeaders = async (): Promise<Record<string, string>> => {
   const supabase = createClient();
