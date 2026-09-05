@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { uploadPDF, type LibraryDocument } from "@/services/api-client";
 import { useAppStore } from "@/store/useAppStore";
 import { useProgressStore } from "@/store/useProgressStore";
+import { cn } from "@/lib/utils";
 import { FileText, Loader2, UploadCloud } from "lucide-react";
 import { useRef, useState } from "react";
 
@@ -22,8 +23,12 @@ function toLibraryDoc(
 
 export function DocumentSidebar({
   variant = "page",
+  className,
+  onPick,
 }: {
   variant?: "page" | "compact";
+  className?: string;
+  onPick?: () => void;
 }) {
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -48,6 +53,7 @@ export function DocumentSidebar({
       const doc = toLibraryDoc(result?.document, file.name);
       addDocument(doc, file);
       void award("pdf_upload");
+      onPick?.();
       if (fileInputRef.current) fileInputRef.current.value = "";
     } catch (error) {
       console.error(error);
@@ -63,7 +69,11 @@ export function DocumentSidebar({
 
   return (
     <aside
-      className={`${width} shrink-0 h-full min-h-0 bg-card/70 border-r border-border p-4 flex flex-col gap-4`}
+      className={cn(
+        width,
+        "shrink-0 h-full min-h-0 bg-card/70 border-r border-border p-4 flex flex-col gap-4",
+        className
+      )}
     >
       {variant === "page" && (
         <h1 className="font-display text-2xl tracking-tight">Biblioteca</h1>
@@ -107,7 +117,10 @@ export function DocumentSidebar({
             <button
               key={doc.id}
               type="button"
-              onClick={() => setActiveDocument(doc.title)}
+              onClick={() => {
+                setActiveDocument(doc.title);
+                onPick?.();
+              }}
               className={`w-full p-3 rounded-xl text-sm text-left transition-colors flex items-center gap-3 border ${
                 isActive
                   ? "bg-primary/10 border-primary/40 text-primary"

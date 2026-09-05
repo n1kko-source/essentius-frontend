@@ -10,6 +10,7 @@ import {
 import { useAppStore } from "@/store/useAppStore";
 import { motion } from "framer-motion";
 import {
+  ArrowLeft,
   Eye,
   FileText,
   Loader2,
@@ -33,7 +34,7 @@ function isPersistedId(id: string) {
   return Boolean(id) && !id.startsWith("local-");
 }
 
-export function DocumentDetail() {
+export function DocumentDetail({ onBack }: { onBack?: () => void }) {
   const documents = useAppStore((s) => s.documents);
   const activeDocument = useAppStore((s) => s.activeDocument);
   const documentFiles = useAppStore((s) => s.documentFiles);
@@ -131,7 +132,7 @@ export function DocumentDetail() {
   };
 
   return (
-    <div className="flex-1 p-6 md:p-8 overflow-y-auto">
+    <div className="flex-1 p-4 md:p-8 overflow-y-auto">
       <motion.div
         key={selected.id}
         initial={{ opacity: 0, y: 8 }}
@@ -139,6 +140,18 @@ export function DocumentDetail() {
         transition={{ duration: 0.35 }}
         className="max-w-xl space-y-8"
       >
+        {onBack ? (
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            className="md:hidden -ml-1 gap-1.5 text-muted-foreground"
+            onClick={onBack}
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Biblioteca
+          </Button>
+        ) : null}
         <div className="flex items-start gap-4">
           <div className="mt-1 flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
             <FileText className="h-5 w-5" />

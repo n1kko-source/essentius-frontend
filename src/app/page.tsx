@@ -26,7 +26,7 @@ export default function LandingPage() {
 
       <LenisProvider enabled={ready}>
         <div
-          className={`essentius-yellow-cta essentius-mesh relative min-h-screen flex flex-col transition-opacity duration-700 ${
+          className={`essentius-yellow-cta essentius-mesh relative min-h-dvh flex flex-col transition-opacity duration-700 ${
             ready ? "opacity-100" : "opacity-0"
           }`}
         >
@@ -42,7 +42,7 @@ export default function LandingPage() {
               Essentius
             </motion.span>
             <motion.div
-              className="flex gap-3"
+              className="flex gap-2 sm:gap-3"
               initial={reduce ? false : { opacity: 0, y: -8 }}
               animate={ready ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, ease: EASE, delay: 0.12 }}
@@ -87,12 +87,12 @@ export default function LandingPage() {
                       </motion.p>
 
                       <motion.div
-                        className="flex flex-wrap gap-3 pt-1"
+                        className="flex flex-col sm:flex-row flex-wrap gap-3 pt-1"
                         initial={reduce ? false : { opacity: 0, y: 14 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.65, delay: 0.58, ease: EASE }}
                       >
-                        <Button size="lg" asChild className="gap-2">
+                        <Button size="lg" asChild className="gap-2 w-full sm:w-auto">
                           <Link href="/login">
                             Empezar a aprender{" "}
                             <ArrowRight className="h-4 w-4" />

@@ -75,11 +75,11 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="dashboard-page p-8 md:p-10 max-w-3xl space-y-10">
+    <div className="dashboard-page max-w-3xl space-y-8 md:space-y-10">
       <motion.div
         className="dashboard-section space-y-2"
       >
-        <h1 className="font-display text-4xl tracking-tight">Ajustes</h1>
+        <h1 className="font-display text-3xl md:text-4xl tracking-tight">Ajustes</h1>
         <p className="dashboard-prose text-muted-foreground text-base leading-relaxed">
           Tu identidad, preferencias de aprendizaje y estilo visual en un solo
           lugar.

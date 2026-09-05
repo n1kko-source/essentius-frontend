@@ -162,7 +162,7 @@ export function RankBar() {
 
       <div className="min-w-0 space-y-1">
         <div className="flex items-baseline gap-2 min-w-0">
-          <span className="font-display text-base tracking-tight text-foreground truncate max-w-[9rem]">
+          <span className="font-display text-sm md:text-base tracking-tight text-foreground truncate max-w-[7rem] md:max-w-[9rem]">
             {label}
           </span>
           <motion.span
@@ -176,7 +176,7 @@ export function RankBar() {
           </motion.span>
         </div>
 
-        <div className="flex items-center gap-2 w-36 max-w-full">
+        <div className="flex items-center gap-2 w-24 md:w-36 max-w-full">
           <div className="h-1 flex-1 rounded-full bg-foreground/10 overflow-hidden">
             <motion.div
               className="h-full rounded-full bg-primary/80 origin-left"

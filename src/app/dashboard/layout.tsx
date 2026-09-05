@@ -1,7 +1,9 @@
 "use client";
 
 import { SignOutDialog } from "@/components/auth/SignOutDialog";
+import { MobileBottomNav } from "@/components/dashboard/MobileBottomNav";
 import { WisdomPhrases } from "@/components/dashboard/WisdomPhrases";
+import { navActive, SIDEBAR_NAV } from "@/components/dashboard/nav";
 import { RankBar } from "@/components/gamification/RankBar";
 import { UnlockOverlay } from "@/components/gamification/UnlockOverlay";
 import { LibraryHydrator } from "@/components/library/LibraryHydrator";
@@ -9,31 +11,11 @@ import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/client";
 import { useAppStore } from "@/store/useAppStore";
 import { useThemeStore } from "@/store/useThemeStore";
-import {
-    BookOpen,
-    Brain,
-    LayoutDashboard,
-    LogOut,
-    Map,
-    MessageSquare,
-    Network,
-    PenLine,
-    Settings2,
-    Trophy,
-} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Brain, LogOut, Settings2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
-
-const NAV = [
-  { href: "/dashboard", label: "Inicio", icon: LayoutDashboard },
-  { href: "/dashboard/library", label: "Biblioteca", icon: BookOpen },
-  { href: "/dashboard/chat", label: "Chat", icon: MessageSquare },
-  { href: "/dashboard/path", label: "Ruta PDF", icon: Map },
-  { href: "/dashboard/deep-learning/notes", label: "Notas humanas", icon: PenLine },
-  { href: "/dashboard/deep-learning/graph", label: "Grafo de ideas", icon: Network },
-  { href: "/dashboard/rank", label: "Rango", icon: Trophy },
-];
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -63,7 +45,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   };
 
   return (
-    <div className="dashboard-shell flex h-screen essentius-mesh text-foreground">
+    <div className="dashboard-shell flex h-dvh flex-col md:flex-row essentius-mesh text-foreground">
       <UnlockOverlay />
       <LibraryHydrator />
       <SignOutDialog
@@ -72,7 +54,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         onCancel={() => setSignOutOpen(false)}
         onConfirm={confirmSignOut}
       />
-      <aside className="w-64 shrink-0 border-r border-border bg-sidebar/80 backdrop-blur-sm flex flex-col p-5 gap-2">
+      <aside className="hidden md:flex w-64 shrink-0 border-r border-border bg-sidebar/80 backdrop-blur-sm flex-col p-5 gap-2">
         <Link
           href="/dashboard"
           className="font-display text-3xl tracking-tight text-foreground px-2 py-3 flex items-center gap-2.5"
@@ -82,11 +64,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         </Link>
 
         <nav className="flex-1 space-y-1.5 mt-3" aria-label="Principal">
-          {NAV.map(({ href, label, icon: Icon }) => {
-            const active =
-              href === "/dashboard"
-                ? pathname === "/dashboard"
-                : pathname.startsWith(href);
+          {SIDEBAR_NAV.map(({ href, label, icon: Icon }) => {
+            const active = navActive(pathname, href);
             return (
               <Link
                 key={href}
@@ -124,15 +103,27 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         </div>
       </aside>
 
-      <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        <header className="shrink-0 min-h-[4.25rem] border-b border-border bg-card/60 backdrop-blur-sm px-5 md:px-8 flex items-center justify-center gap-6 md:gap-8">
+      <main className="flex-1 flex flex-col min-w-0 overflow-hidden pb-[var(--mobile-nav-pad)] md:pb-0">
+        <header
+          className={cn(
+            "shrink-0 min-h-14 md:min-h-[4.25rem] border-b border-border bg-card/60 backdrop-blur-sm px-4 md:px-8 items-center justify-center gap-6 md:gap-8",
+            pathname.startsWith("/dashboard/chat") ||
+              pathname.startsWith("/dashboard/deep-learning/graph")
+              ? "hidden md:flex"
+              : "flex"
+          )}
+        >
           <RankBar />
-          <WisdomPhrases />
+          <div className="hidden md:flex min-w-0">
+            <WisdomPhrases />
+          </div>
         </header>
         <div data-dashboard-scroll className="flex-1 min-h-0 overflow-auto">
           {children}
         </div>
       </main>
+
+      <MobileBottomNav onSignOut={() => setSignOutOpen(true)} />
     </div>
   );
 }

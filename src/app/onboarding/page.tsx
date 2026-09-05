@@ -59,9 +59,9 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="essentius-mesh min-h-screen flex items-center justify-center p-6">
+    <div className="essentius-mesh min-h-dvh flex items-center justify-center p-5 md:p-6 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
       <motion.div
-        className="w-full max-w-xl space-y-8 bg-card/80 backdrop-blur-sm border border-border rounded-2xl p-8 shadow-sm"
+        className="w-full max-w-xl max-h-[min(100dvh-2.5rem,48rem)] overflow-y-auto space-y-8 bg-card/80 backdrop-blur-sm border border-border rounded-2xl p-5 md:p-8 shadow-sm"
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45 }}

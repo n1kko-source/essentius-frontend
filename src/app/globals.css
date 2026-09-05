@@ -97,6 +97,8 @@
   --content-gap: 1.25rem;
   --dashboard-pad: 1.75rem;
   --dashboard-max: 56rem;
+  --mobile-nav-h: 3.5rem;
+  --mobile-nav-pad: calc(var(--mobile-nav-h) + env(safe-area-inset-bottom, 0px));
 }
 
 /* Accent preference overrides */
@@ -367,6 +369,10 @@ html[data-density="balanced"] {
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    @apply font-sans;
+    overflow-x: clip;
+  }
   body {
     @apply bg-background text-foreground antialiased;
     font-family: var(--font-body), "IBM Plex Sans", ui-sans-serif, system-ui,
@@ -374,9 +380,7 @@ html[data-density="balanced"] {
     font-size: var(--type-base);
     line-height: 1.55;
     letter-spacing: 0.01em;
-  }
-  html {
-    @apply font-sans;
+    overflow-x: clip;
   }
   h1,
   h2,
@@ -393,13 +397,33 @@ html[data-density="balanced"] {
 /* Shell del dashboard: más aire y tipografía un punto más grande */
 .dashboard-shell {
   font-size: calc(var(--type-base) * 1.04);
+  overflow-x: clip;
 }
 
 .dashboard-shell .dashboard-page {
-  padding: var(--dashboard-pad);
+  padding: 1.25rem 1rem 1.5rem;
   max-width: var(--dashboard-max);
   margin-inline: auto;
   text-align: center;
+}
+
+@media (max-width: 767px) {
+  html {
+    --type-base: 1rem;
+    --dashboard-pad: 1rem;
+  }
+  .dashboard-shell {
+    font-size: 1rem;
+  }
+  .dashboard-shell .dashboard-page {
+    padding: 1rem 0.75rem 1.25rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .dashboard-shell .dashboard-page {
+    padding: var(--dashboard-pad);
+  }
 }
 
 .dashboard-shell .dashboard-page .dashboard-section {

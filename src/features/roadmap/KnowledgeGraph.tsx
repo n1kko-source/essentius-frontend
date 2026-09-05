@@ -161,7 +161,7 @@ export function KnowledgeGraph() {
 
   if (!activeDocument) {
     return (
-      <div className="w-full h-full min-h-[500px] border border-border rounded-2xl bg-card/60 flex flex-col items-center justify-center text-muted-foreground">
+      <div className="w-full h-full min-h-[280px] md:min-h-[500px] border border-border rounded-2xl bg-card/60 flex flex-col items-center justify-center text-muted-foreground px-4 text-center">
         <FileQuestion className="h-12 w-12 mb-4 opacity-50" />
         <p>Selecciona un documento para ver su ruta de aprendizaje.</p>
       </div>
@@ -171,7 +171,7 @@ export function KnowledgeGraph() {
   const hasRoadmap = roadmaps[activeDocument] !== undefined;
 
   return (
-    <div className="relative w-full h-full min-h-[500px] border border-border rounded-2xl overflow-hidden bg-card/40">
+    <div className="relative w-full h-full min-h-[280px] md:min-h-[500px] border border-border rounded-2xl overflow-hidden bg-card/40">
       {!hasRoadmap && (
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-background/80 backdrop-blur-sm gap-3 px-6 text-center">
           <p className="text-muted-foreground text-sm">

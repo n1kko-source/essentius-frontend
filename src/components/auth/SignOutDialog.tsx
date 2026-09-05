@@ -33,7 +33,7 @@ export function SignOutDialog({
           aria-labelledby="signout-title"
         >
           <motion.div
-            className="w-full max-w-2xl rounded-[2rem] border border-border bg-card/95 px-6 py-8 md:px-12 md:py-12 shadow-xl text-center space-y-6 md:space-y-8"
+            className="w-full max-w-2xl max-h-[90dvh] overflow-y-auto rounded-[2rem] border border-border bg-card/95 px-6 py-8 md:px-12 md:py-12 shadow-xl text-center space-y-6 md:space-y-8"
             initial={reduce ? false : { opacity: 0, scale: 0.92, y: 16 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={reduce ? undefined : { opacity: 0, scale: 0.96 }}
@@ -41,7 +41,7 @@ export function SignOutDialog({
             onClick={(e) => e.stopPropagation()}
           >
             <div
-              className="mx-auto h-[min(42vh,20rem)] w-[min(42vh,20rem)] md:h-[min(48vh,24rem)] md:w-[min(48vh,24rem)]"
+              className="mx-auto h-[min(28vh,12rem)] w-[min(28vh,12rem)] md:h-[min(48vh,24rem)] md:w-[min(48vh,24rem)]"
               aria-hidden
             >
               <DotLottieReact

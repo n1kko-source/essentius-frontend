@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
 import type { BiasMirrorResult } from "@/services/api-client";
 import { ExternalLink, Loader2, Scale } from "lucide-react";
 import { motion } from "framer-motion";
@@ -43,16 +44,18 @@ export function BiasMirrorPanel({
   noteTitle,
   onRefreshLive,
   liveLoading,
+  className,
 }: {
   result: BiasMirrorResult | null;
   loading: boolean;
   noteTitle?: string;
   onRefreshLive?: () => void;
   liveLoading?: boolean;
+  className?: string;
 }) {
   if (loading) {
     return (
-      <aside className="h-full w-full border-l border-border bg-card/80 p-6 flex flex-col items-center justify-center gap-3 text-muted-foreground">
+      <aside className={cn("h-full w-full border-l border-border bg-card/80 p-6 flex flex-col items-center justify-center gap-3 text-muted-foreground", className)}>
         <Loader2 className="h-6 w-6 animate-spin text-primary" />
         <p className="text-sm">Contrastando con tu biblioteca…</p>
       </aside>
@@ -61,7 +64,7 @@ export function BiasMirrorPanel({
 
   if (!result) {
     return (
-      <aside className="h-full w-full border-l border-border bg-card/60 p-6 flex flex-col justify-center text-center text-muted-foreground gap-3">
+      <aside className={cn("h-full w-full border-l border-border bg-card/60 p-6 flex flex-col justify-center text-center text-muted-foreground gap-3", className)}>
         <Scale className="h-8 w-8 mx-auto text-primary/60" strokeWidth={1.5} />
         <p className="text-sm leading-relaxed">
           Selecciona una nota en el grafo para ver la comparación con fuentes.
@@ -73,7 +76,7 @@ export function BiasMirrorPanel({
   const sources = result.sources || "library";
 
   return (
-    <aside className="h-full w-full border-l border-border bg-card/90 backdrop-blur-sm flex flex-col overflow-hidden">
+    <aside className={cn("h-full w-full border-l border-border bg-card/90 backdrop-blur-sm flex flex-col overflow-hidden", className)}>
       <div className="p-5 border-b border-border space-y-1">
         <p className="text-xs font-medium text-primary uppercase tracking-wide flex items-center gap-1.5">
           <Scale className="h-3.5 w-3.5" /> Espejo de sesgo

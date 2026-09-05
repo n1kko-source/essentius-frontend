@@ -68,9 +68,9 @@ export function ChatInterface() {
   };
 
   return (
-    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-2xl border border-border bg-card/80 shadow-xs">
+    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-none border-0 bg-card/80 md:rounded-2xl md:border md:border-border md:shadow-xs">
       {activeDocument && (
-        <div className="shrink-0 px-4 py-2 border-b border-border bg-muted/30 text-xs text-muted-foreground flex items-center gap-2">
+        <div className="hidden md:flex shrink-0 px-4 py-2 border-b border-border bg-muted/30 text-xs text-muted-foreground items-center gap-2">
           <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
           Contexto: <strong className="text-primary">{activeDocument}</strong>
         </div>
@@ -78,18 +78,18 @@ export function ChatInterface() {
 
       <div
         ref={scrollerRef}
-        className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-4"
+        className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-3 py-3 md:p-4"
       >
-        <div className="space-y-6">
+        <div className="space-y-4 md:space-y-6">
           {messages.map((msg, index) => (
             <div
               key={index}
-              className={`flex gap-3 items-start ${
+              className={`flex gap-2 md:gap-3 items-start ${
                 msg.role === "user" ? "flex-row-reverse" : ""
               }`}
             >
               <Avatar
-                className={`h-9 w-9 border ${
+                className={`hidden md:flex h-9 w-9 border ${
                   msg.role === "ai" ? "border-primary/40" : "border-border"
                 }`}
               >
@@ -104,7 +104,7 @@ export function ChatInterface() {
               </Avatar>
 
               <div
-                className={`p-3 rounded-xl max-w-[80%] text-sm whitespace-pre-wrap break-words ${
+                className={`p-3 rounded-xl max-w-[94%] md:max-w-[80%] text-sm whitespace-pre-wrap break-words ${
                   msg.role === "user"
                     ? "bg-primary text-primary-foreground"
                     : "bg-muted text-foreground"
@@ -137,7 +137,7 @@ export function ChatInterface() {
           placeholder={
             activeDocument
               ? `Pregunta sobre ${activeDocument}...`
-              : "Haz una pregunta (selecciona un PDF para más contexto)..."
+              : "Haz una pregunta…"
           }
           className="bg-background focus-visible:ring-primary"
           value={input}

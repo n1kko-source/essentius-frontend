@@ -12,8 +12,9 @@ import {
 import { useAppStore } from "@/store/useAppStore";
 import { useProgressStore } from "@/store/useProgressStore";
 import { createClient } from "@/lib/supabase/client";
+import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { Loader2, Plus, Trash2 } from "lucide-react";
+import { ArrowLeft, Loader2, Plus, Trash2 } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 
 export function NotesEditor() {
@@ -27,6 +28,7 @@ export function NotesEditor() {
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showEditor, setShowEditor] = useState(false);
 
   const selected = notes.find((n) => n.id === selectedNoteId) ?? null;
 
@@ -67,6 +69,16 @@ export function NotesEditor() {
     setBody("");
     setTopic("");
     setLinkIds([]);
+    setShowEditor(true);
+  };
+
+  const openNote = (id: string) => {
+    setSelectedNoteId(id);
+    setShowEditor(true);
+  };
+
+  const backToList = () => {
+    setShowEditor(false);
   };
 
   const save = async () => {
@@ -133,8 +145,13 @@ export function NotesEditor() {
   };
 
   return (
-    <div className="h-[calc(100vh-3.5rem)] flex">
-      <aside className="w-64 shrink-0 border-r border-border bg-card/60 p-4 flex flex-col gap-3">
+    <div className="h-full min-h-0 flex">
+      <aside
+        className={cn(
+          "w-full md:w-64 shrink-0 border-r-0 md:border-r border-border bg-card/60 p-4 flex flex-col gap-3",
+          showEditor ? "hidden md:flex" : "flex"
+        )}
+      >
         <div className="flex items-center justify-between">
           <h2 className="font-display text-xl">Notas</h2>
           <Button size="sm" variant="outline" onClick={startNew}>
@@ -149,7 +166,7 @@ export function NotesEditor() {
               <button
                 key={n.id}
                 type="button"
-                onClick={() => setSelectedNoteId(n.id)}
+                onClick={() => openNote(n.id)}
                 className={`w-full text-left rounded-xl px-3 py-2.5 text-sm border transition-colors ${
                   selectedNoteId === n.id
                     ? "border-primary/40 bg-primary/10 text-primary"
@@ -171,7 +188,22 @@ export function NotesEditor() {
         )}
       </aside>
 
-      <div className="flex-1 flex flex-col min-w-0 p-6 gap-4 max-w-3xl">
+      <div
+        className={cn(
+          "flex-1 flex flex-col min-w-0 p-4 md:p-6 gap-4 max-w-3xl overflow-y-auto",
+          showEditor ? "flex" : "hidden md:flex"
+        )}
+      >
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          className="md:hidden self-start -ml-1 gap-1.5 text-muted-foreground"
+          onClick={backToList}
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Notas
+        </Button>
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-xs font-medium text-primary uppercase tracking-wide">
@@ -249,7 +281,10 @@ export function NotesEditor() {
           </div>
         )}
 
-        <motion.div className="flex gap-2" layout>
+        <motion.div
+          className="flex gap-2 sticky bottom-0 bg-card/90 backdrop-blur-sm py-2 -mx-1 px-1"
+          layout
+        >
           <Button onClick={save} disabled={saving}>
             {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : "Guardar"}
           </Button>

@@ -1,5 +1,6 @@
 "use client";
 
+import { BottomSheet } from "@/components/ui/bottom-sheet";
 import { BiasMirrorPanel } from "@/features/deep-learning/BiasMirrorPanel";
 import ThoughtNode from "@/features/deep-learning/ThoughtNode";
 import { prefersReducedMotion, pulseNode } from "@/lib/motion/gsap";
@@ -325,13 +326,13 @@ function ThoughtGraphInner() {
             onNodeClick={onNodeClick}
           />
         )}
-        <div className="absolute top-4 left-4 text-xs font-medium px-3 py-1.5 bg-card/90 border border-border rounded-full text-muted-foreground">
-          Grafo de pensamientos · partículas
+        <div className="absolute top-3 left-3 text-[11px] md:text-xs font-medium px-3 py-1.5 bg-card/90 border border-border rounded-full text-muted-foreground max-w-[min(100%,14rem)] truncate">
+          Grafo · partículas
         </div>
       </div>
 
       <div
-        className="relative shrink-0 h-full min-h-0"
+        className="relative hidden md:block shrink-0 h-full min-h-0"
         style={{ width: panelWidth }}
       >
         <button
@@ -355,6 +356,29 @@ function ThoughtGraphInner() {
           }
         />
       </div>
+
+      <BottomSheet
+        open={Boolean(selectedNoteId)}
+        onClose={() => {
+          setSelectedNoteId(null);
+          setResult(null);
+        }}
+        title={selectedNote?.title || "Espejo de sesgo"}
+        heightClass="h-[min(62vh,32rem)]"
+      >
+        <BiasMirrorPanel
+          className="border-0 min-h-[18rem]"
+          result={result}
+          loading={mirrorLoading}
+          noteTitle={selectedNote?.title}
+          liveLoading={liveLoading}
+          onRefreshLive={
+            selectedNoteId
+              ? () => runMirror(selectedNoteId, true)
+              : undefined
+          }
+        />
+      </BottomSheet>
     </div>
   );
 }

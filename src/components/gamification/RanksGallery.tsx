@@ -342,7 +342,7 @@ export function RanksGallery({
 
   return (
     <div ref={contentRef} className="w-full pb-16">
-      <div className="px-6 md:px-10 pt-8 md:pt-10 pb-4 max-w-5xl mx-auto w-full">
+      <div className="px-4 md:px-10 pt-6 md:pt-10 pb-4 max-w-5xl mx-auto w-full">
         {header}
       </div>
 

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Source_Serif_4, IBM_Plex_Sans, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
@@ -28,6 +28,13 @@ export const metadata: Metadata = {
   title: "Essentius | Aprendizaje con tu propio pensamiento",
   description:
     "Gestiona tu aprendizaje, escribe sin IA y compara tus ideas con la ciencia y tu biblioteca.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#f7f9fc",
 };
 
 export default function RootLayout({

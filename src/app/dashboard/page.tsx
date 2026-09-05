@@ -11,14 +11,14 @@ export default function DashboardPage() {
   const notesCount = useAppStore((s) => s.notes.length);
 
   return (
-    <div className="dashboard-page p-8 md:p-10 max-w-5xl space-y-10">
+    <div className="dashboard-page max-w-5xl space-y-8 md:space-y-10">
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
         className="dashboard-section space-y-3"
       >
-        <h1 className="font-display text-4xl tracking-tight">Tu espacio</h1>
+        <h1 className="font-display text-3xl md:text-4xl tracking-tight">Tu espacio</h1>
         <p className="dashboard-prose text-muted-foreground text-base leading-relaxed">
           Gestiona fuentes, escribe pensamientos sin IA y compáralos en el grafo.
         </p>

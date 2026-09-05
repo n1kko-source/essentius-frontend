@@ -33,14 +33,14 @@ export function UnlockOverlay() {
           aria-label={current.title}
         >
           <motion.div
-            className="relative w-full max-w-3xl rounded-[2rem] border border-border bg-card/95 px-6 py-8 md:px-14 md:py-12 shadow-xl text-center space-y-5 md:space-y-6"
+            className="relative w-full max-w-3xl max-h-[90dvh] overflow-y-auto rounded-[2rem] border border-border bg-card/95 px-6 py-8 md:px-14 md:py-12 shadow-xl text-center space-y-5 md:space-y-6"
             initial={reduce ? false : { opacity: 0, scale: 0.9, y: 18 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={reduce ? undefined : { opacity: 0, scale: 0.96 }}
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="mx-auto h-[min(46vh,22rem)] w-[min(46vh,22rem)] md:h-[min(52vh,26rem)] md:w-[min(52vh,26rem)]">
+            <div className="mx-auto h-[min(28vh,12rem)] w-[min(28vh,12rem)] md:h-[min(52vh,26rem)] md:w-[min(52vh,26rem)]">
               <DotLottieReact
                 src={current.lottie || UNLOCK_LOTTIE.success}
                 autoplay={!reduce}

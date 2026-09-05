@@ -93,7 +93,7 @@ function LoginForm() {
   };
 
   return (
-    <div className="essentius-yellow-cta essentius-mesh relative min-h-screen flex items-center justify-center p-4">
+    <div className="essentius-yellow-cta essentius-mesh relative min-h-dvh flex items-center justify-center p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
       <CursorParticles id="essentius-login-particles" />
 
       <Card className="relative z-10 w-full max-w-md border-border bg-card/90 backdrop-blur-sm shadow-sm">
@@ -181,7 +181,7 @@ export default function LoginPage() {
   return (
     <Suspense
       fallback={
-        <div className="essentius-mesh min-h-screen flex items-center justify-center">
+        <div className="essentius-mesh min-h-dvh flex items-center justify-center">
           <Loader2 className="h-6 w-6 animate-spin text-primary" />
         </div>
       }

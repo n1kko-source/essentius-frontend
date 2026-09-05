@@ -37,7 +37,7 @@ export default function RankPage() {
         <p className="text-sm text-primary font-medium flex items-center justify-center gap-2">
           <Trophy className="h-4 w-4" /> Rango Essentius
         </p>
-        <h1 className="font-display text-4xl tracking-tight">
+        <h1 className="font-display text-3xl md:text-4xl tracking-tight">
           Nivel y prestigios
         </h1>
         <p className="dashboard-prose text-muted-foreground text-base leading-relaxed mx-auto max-w-lg">
