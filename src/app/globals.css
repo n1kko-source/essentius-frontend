@@ -97,7 +97,7 @@
   --content-gap: 1.25rem;
   --dashboard-pad: 1.75rem;
   --dashboard-max: 56rem;
-  --mobile-nav-h: 3.5rem;
+  --mobile-nav-h: 4.25rem;
   --mobile-nav-pad: calc(var(--mobile-nav-h) + env(safe-area-inset-bottom, 0px));
 }
 
@@ -409,14 +409,14 @@ html[data-density="balanced"] {
 
 @media (max-width: 767px) {
   html {
-    --type-base: 1rem;
-    --dashboard-pad: 1rem;
+    --type-base: 1.125rem;
+    --dashboard-pad: 1.15rem;
   }
   .dashboard-shell {
-    font-size: 1rem;
+    font-size: 1.125rem;
   }
   .dashboard-shell .dashboard-page {
-    padding: 1rem 0.75rem 1.25rem;
+    padding: 1.15rem 1rem 1.35rem;
   }
 }
 

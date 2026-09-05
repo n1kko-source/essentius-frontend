@@ -24,7 +24,7 @@ export function MobileBottomNav({
         aria-label="Navegación"
       >
         <div
-          className="grid grid-cols-6 h-14"
+          className="grid grid-cols-6 px-1"
           style={{ height: "var(--mobile-nav-h)" }}
         >
           {MOBILE_TABS.map(({ href, label, icon: Icon }) => {
@@ -34,13 +34,13 @@ export function MobileBottomNav({
                 key={href}
                 href={href}
                 className={cn(
-                  "flex flex-col items-center justify-center gap-0.5 text-[10px] leading-none",
+                  "flex flex-col items-center justify-center gap-1 rounded-xl mx-0.5 my-1.5 text-[12px] font-medium leading-tight",
                   active
-                    ? "text-primary font-medium"
-                    : "text-muted-foreground"
+                    ? "text-primary bg-primary/10"
+                    : "text-foreground/80"
                 )}
               >
-                <Icon className="h-[1.15rem] w-[1.15rem]" strokeWidth={1.75} />
+                <Icon className="h-6 w-6" strokeWidth={2} />
                 {label}
               </Link>
             );
@@ -49,11 +49,13 @@ export function MobileBottomNav({
             type="button"
             onClick={() => setMoreOpen(true)}
             className={cn(
-              "flex flex-col items-center justify-center gap-0.5 text-[10px] leading-none",
-              moreActive ? "text-primary font-medium" : "text-muted-foreground"
+              "flex flex-col items-center justify-center gap-1 rounded-xl mx-0.5 my-1.5 text-[12px] font-medium leading-tight",
+              moreActive
+                ? "text-primary bg-primary/10"
+                : "text-foreground/80"
             )}
           >
-            <Ellipsis className="h-[1.15rem] w-[1.15rem]" strokeWidth={1.75} />
+            <Ellipsis className="h-6 w-6" strokeWidth={2} />
             Más
           </button>
         </div>
@@ -65,20 +67,20 @@ export function MobileBottomNav({
         title="Más"
         heightClass="h-auto max-h-[70vh]"
       >
-        <div className="p-3 space-y-1">
+        <div className="p-4 space-y-1.5">
           {MORE_LINKS.map(({ href, label, icon: Icon }) => (
             <Link
               key={href}
               href={href}
               onClick={() => setMoreOpen(false)}
               className={cn(
-                "flex items-center gap-3 rounded-xl px-3 py-3 text-sm",
+                "flex items-center gap-3 rounded-xl px-4 py-3.5 text-base",
                 navActive(pathname, href)
                   ? "bg-primary/10 text-primary font-medium"
                   : "text-foreground hover:bg-muted/60"
               )}
             >
-              <Icon className="h-5 w-5 shrink-0" strokeWidth={1.75} />
+              <Icon className="h-6 w-6 shrink-0" strokeWidth={1.75} />
               {label}
             </Link>
           ))}
@@ -88,9 +90,9 @@ export function MobileBottomNav({
               setMoreOpen(false);
               onSignOut();
             }}
-            className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm text-muted-foreground hover:bg-muted/60"
+            className="flex w-full items-center gap-3 rounded-xl px-4 py-3.5 text-base text-muted-foreground hover:bg-muted/60"
           >
-            <LogOut className="h-5 w-5 shrink-0" strokeWidth={1.75} />
+            <LogOut className="h-6 w-6 shrink-0" strokeWidth={1.75} />
             Cerrar sesión
           </button>
         </div>

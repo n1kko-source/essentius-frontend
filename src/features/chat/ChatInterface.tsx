@@ -78,7 +78,7 @@ export function ChatInterface() {
 
       <div
         ref={scrollerRef}
-        className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-3 py-3 md:p-4"
+        className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-3 py-4 md:p-4"
       >
         <div className="space-y-4 md:space-y-6">
           {messages.map((msg, index) => (
@@ -104,14 +104,14 @@ export function ChatInterface() {
               </Avatar>
 
               <div
-                className={`p-3 rounded-xl max-w-[94%] md:max-w-[80%] text-sm whitespace-pre-wrap break-words ${
+                className={`p-3.5 md:p-3 rounded-2xl max-w-[96%] md:max-w-[80%] text-[16px] md:text-sm leading-relaxed whitespace-pre-wrap break-words ${
                   msg.role === "user"
                     ? "bg-primary text-primary-foreground"
                     : "bg-muted text-foreground"
                 }`}
               >
                 {msg.role === "ai" && (
-                  <p className="text-primary font-semibold mb-1 text-xs">
+                  <p className="text-primary font-semibold mb-1.5 text-sm">
                     Essentius
                   </p>
                 )}
@@ -121,10 +121,10 @@ export function ChatInterface() {
           ))}
           {isLoading && (
             <div className="flex gap-3 items-start">
-              <Avatar className="h-9 w-9 border border-primary/40">
+              <Avatar className="hidden md:flex h-9 w-9 border border-primary/40">
                 <BrainCircuit className="h-5 w-5 text-primary animate-pulse" />
               </Avatar>
-              <div className="bg-muted p-3 rounded-xl text-sm text-muted-foreground animate-pulse">
+              <div className="bg-muted p-3.5 rounded-2xl text-[16px] md:text-sm text-muted-foreground animate-pulse">
                 Analizando contexto...
               </div>
             </div>
@@ -132,20 +132,21 @@ export function ChatInterface() {
         </div>
       </div>
 
-      <div className="shrink-0 p-3 border-t border-border bg-muted/20 flex gap-2">
+      <div className="shrink-0 p-3 md:p-3 border-t border-border bg-muted/20 flex gap-2">
         <Input
           placeholder={
             activeDocument
               ? `Pregunta sobre ${activeDocument}...`
               : "Haz una pregunta…"
           }
-          className="bg-background focus-visible:ring-primary"
+          className="bg-background focus-visible:ring-primary h-12 md:h-9 text-base md:text-sm"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSend()}
           disabled={isLoading}
         />
         <Button
+          className="h-12 px-5 text-base md:h-9 md:px-3 md:text-sm"
           onClick={handleSend}
           disabled={isLoading || !input.trim()}
         >

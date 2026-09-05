@@ -15,9 +15,9 @@ export function MobilePdfPicker() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="w-full flex items-center gap-2 rounded-xl border border-border bg-card/80 px-3 py-2 text-left text-sm"
+        className="w-full flex min-h-12 items-center gap-2.5 rounded-xl border border-border bg-card px-3.5 py-3 text-left text-[15px]"
       >
-        <FileText className="h-4 w-4 shrink-0 text-primary" />
+        <FileText className="h-5 w-5 shrink-0 text-primary" />
         <span className="truncate text-muted-foreground">
           {activeDocument ? (
             <>
