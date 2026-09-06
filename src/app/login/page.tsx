@@ -68,12 +68,12 @@ function LoginForm() {
       const remote = await fetchVisualProfile();
       if (remote) {
         hydrateProfile(remote);
+      } else {
+        useThemeStore.getState().resetProfile();
       }
 
       const next = searchParams.get("next");
-      const done =
-        remote?.onboardingComplete ??
-        useThemeStore.getState().onboardingComplete;
+      const done = Boolean(remote?.onboardingComplete);
 
       if (!done) {
         router.push("/onboarding");

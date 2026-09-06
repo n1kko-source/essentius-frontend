@@ -25,6 +25,7 @@ interface AppState {
   renameDocument: (id: string, nextTitle: string) => void;
   removeDocument: (id: string) => void;
   clearLibrary: () => void;
+  resetWorkspace: () => void;
   setActiveDocument: (fileName: string | null) => void;
   saveRoadmap: (fileName: string, data: RoadmapData) => void;
   setNotes: (notes: HumanNote[]) => void;
@@ -125,6 +126,16 @@ export const useAppStore = create<AppState>((set) => ({
       documentFiles: {},
       activeDocument: null,
       roadmaps: {},
+    }),
+
+  resetWorkspace: () =>
+    set({
+      documents: [],
+      documentFiles: {},
+      activeDocument: null,
+      roadmaps: {},
+      notes: [],
+      selectedNoteId: null,
     }),
 
   setActiveDocument: (fileName) => set({ activeDocument: fileName }),

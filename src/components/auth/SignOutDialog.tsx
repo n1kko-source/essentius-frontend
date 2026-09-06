@@ -59,8 +59,9 @@ export function SignOutDialog({
                 ¿Cerrar sesión?
               </h2>
               <p className="text-base text-muted-foreground leading-relaxed max-w-md mx-auto">
-                Saldrás de Essentius y volverás a la página de inicio. Tus notas
-                y progreso quedan guardados.
+                Saldrás de Essentius. Podrás entrar con otra cuenta o crear un
+                perfil nuevo. Tus notas y progreso quedan guardados en esta
+                cuenta.
               </p>
             </div>
             <div className="flex flex-col-reverse sm:flex-row gap-3 pt-1 max-w-md mx-auto">

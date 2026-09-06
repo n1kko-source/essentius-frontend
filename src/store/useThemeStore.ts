@@ -22,6 +22,7 @@ interface ThemeState extends VisualProfile {
   applyRecommendation: () => void;
   completeOnboarding: () => void;
   resetOnboarding: () => void;
+  resetProfile: () => void;
   hydrateProfile: (profile: VisualProfile) => void;
 }
 
@@ -70,6 +71,8 @@ export const useThemeStore = create<ThemeState>()(
       completeOnboarding: () => set({ onboardingComplete: true }),
 
       resetOnboarding: () => set({ onboardingComplete: false }),
+
+      resetProfile: () => set({ ...DEFAULT_PROFILE }),
 
       hydrateProfile: (profile) => set({ ...DEFAULT_PROFILE, ...profile }),
     }),

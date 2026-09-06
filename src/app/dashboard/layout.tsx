@@ -8,8 +8,8 @@ import { RankBar } from "@/components/gamification/RankBar";
 import { UnlockOverlay } from "@/components/gamification/UnlockOverlay";
 import { LibraryHydrator } from "@/components/library/LibraryHydrator";
 import { Button } from "@/components/ui/button";
+import { clearClientSession } from "@/lib/auth/clear-client-session";
 import { createClient } from "@/lib/supabase/client";
-import { useAppStore } from "@/store/useAppStore";
 import { useThemeStore } from "@/store/useThemeStore";
 import { cn } from "@/lib/utils";
 import { Brain, LogOut, Settings2 } from "lucide-react";
@@ -21,26 +21,28 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const onboardingComplete = useThemeStore((s) => s.onboardingComplete);
-  const clearLibrary = useAppStore((s) => s.clearLibrary);
   const [signOutOpen, setSignOutOpen] = useState(false);
   const [signingOut, setSigningOut] = useState(false);
 
   useEffect(() => {
+    if (signingOut) return;
     if (!onboardingComplete) {
       router.replace("/onboarding");
     }
-  }, [onboardingComplete, router]);
+  }, [onboardingComplete, router, signingOut]);
 
   const confirmSignOut = async () => {
     setSigningOut(true);
     try {
-      const supabase = createClient();
-      await supabase.auth.signOut();
-      clearLibrary();
-      setSignOutOpen(false);
-      router.push("/");
+      try {
+        const supabase = createClient();
+        await supabase.auth.signOut();
+      } catch {
+        /* httpOnly cookies: the route handler expires them */
+      }
+      clearClientSession();
     } finally {
-      setSigningOut(false);
+      window.location.assign("/auth/sign-out");
     }
   };
 

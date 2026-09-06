@@ -31,6 +31,7 @@ interface ProgressStore {
   shiftUnlock: () => void;
   enqueueUnlock: (event: UnlockEvent) => void;
   clearLastAward: () => void;
+  reset: () => void;
 }
 
 import { BADGES, UNLOCK_LOTTIE } from "@/lib/gamification/config";
@@ -52,6 +53,14 @@ export const useProgressStore = create<ProgressStore>((set, get) => ({
     set((s) => ({ unlockQueue: s.unlockQueue.slice(1) })),
 
   clearLastAward: () => set({ lastAward: null }),
+
+  reset: () =>
+    set({
+      progress: null,
+      loading: false,
+      unlockQueue: [],
+      lastAward: null,
+    }),
 
   refresh: async () => {
     set({ loading: true });
