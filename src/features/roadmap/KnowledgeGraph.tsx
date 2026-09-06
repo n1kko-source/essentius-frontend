@@ -45,6 +45,7 @@ export function KnowledgeGraph() {
   const {
     activeDocument,
     documentFiles,
+    documents,
     roadmaps,
     saveRoadmap,
   } = useAppStore();
@@ -89,9 +90,14 @@ export function KnowledgeGraph() {
   const handleGenerateClick = async () => {
     if (!activeDocument) return;
     const file = documentFiles[activeDocument];
-    if (!file) {
+    const selected = documents.find((d) => d.title === activeDocument);
+    const documentId = selected?.id;
+    const persisted =
+      Boolean(documentId) && !String(documentId).startsWith("local-");
+
+    if (!file && !persisted) {
       setError(
-        "Necesitas volver a seleccionar el PDF (subirlo de nuevo) para generar la ruta real."
+        "Este PDF no está indexado. Súbelo otra vez en Biblioteca y genera la ruta."
       );
       return;
     }
@@ -99,9 +105,17 @@ export function KnowledgeGraph() {
     setIsGenerating(true);
     setError(null);
     try {
-      const data = await generateRoadmap(file);
+      const data = await generateRoadmap({
+        file,
+        documentId: persisted ? documentId : null,
+      });
       const apiNodes: ApiNode[] = data.nodes || [];
       const apiEdges: ApiEdge[] = data.edges || [];
+
+      if (!apiNodes.length) {
+        setError("La IA no devolvió nodos. Inténtalo de nuevo.");
+        return;
+      }
 
       const flowNodes: Node[] = apiNodes.map((n, i) => ({
         id: String(n.id ?? i),
@@ -129,7 +143,11 @@ export function KnowledgeGraph() {
       saveRoadmap(activeDocument, { nodes: flowNodes, edges: flowEdges });
     } catch (err) {
       console.error(err);
-      setError("No se pudo generar la ruta. Revisa el backend.");
+      setError(
+        err instanceof Error && err.message
+          ? err.message
+          : "No se pudo generar la ruta. Revisa el backend."
+      );
     } finally {
       setIsGenerating(false);
     }

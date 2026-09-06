@@ -26,6 +26,17 @@ const getAuthHeaders = async (): Promise<Record<string, string>> => {
   };
 };
 
+async function apiErrorMessage(response: Response, fallback: string): Promise<string> {
+  try {
+    const body = await response.json();
+    if (typeof body?.detail === "string" && body.detail.trim()) return body.detail;
+    if (body?.detail) return JSON.stringify(body.detail);
+  } catch {
+    /* ignore */
+  }
+  return `${fallback} (HTTP ${response.status})`;
+}
+
 export interface HumanNote {
   id: string;
   title: string;
@@ -201,17 +212,50 @@ export const deleteDocument = async (
   return response.json();
 };
 
-export const generateRoadmap = async (file: File) => {
+export const generateRoadmap = async (opts: {
+  file?: File | null;
+  documentId?: string | null;
+}) => {
   const headers = await getAuthHeaders();
-  const formData = new FormData();
-  formData.append("file", file);
+  const persistedId = opts.documentId?.trim() || "";
+  const canUseIndex =
+    Boolean(persistedId) && !persistedId.startsWith("local-");
 
-  const response = await fetch(`${API_BASE_URL}/graph/generate`, {
-    method: "POST",
-    headers,
-    body: formData,
-  });
-  if (!response.ok) throw new Error("Error al generar el mapa");
+  let response: Response;
+  try {
+    if (canUseIndex) {
+      response = await fetch(`${API_BASE_URL}/graph/generate`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...headers,
+        },
+        body: JSON.stringify({ document_id: persistedId }),
+      });
+    } else if (opts.file) {
+      const formData = new FormData();
+      formData.append("file", opts.file);
+      response = await fetch(`${API_BASE_URL}/graph/generate`, {
+        method: "POST",
+        headers,
+        body: formData,
+      });
+    } else {
+      throw new Error(
+        "Selecciona un PDF de la biblioteca o súbelo de nuevo para generar la ruta."
+      );
+    }
+  } catch (err) {
+    if (err instanceof Error && !err.message.startsWith("Selecciona")) {
+      throw new Error(
+        `No se pudo conectar con el API (${API_BASE_URL}). ¿Backend en :8000?`
+      );
+    }
+    throw err;
+  }
+  if (!response.ok) {
+    throw new Error(await apiErrorMessage(response, "Error al generar el mapa"));
+  }
   return response.json();
 };
 
